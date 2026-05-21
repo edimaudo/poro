@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Poro – A beautiful Pomodoro timer with integrated music player." />
+  <title>{% block title %}Poro{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
 
+  <!-- Skip link for accessibility -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="app-wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <div class="logo" aria-label="Poro Pomodoro Timer">
+          <span class="logo-icon" aria-hidden="true"></span>
+          <span class="logo-text">Poro</span>
+        </div>
+
+        <!-- Theme Toggle -->
+        <div class="theme-toggle-wrap">
+          <span class="theme-label" id="theme-label">Light</span>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            role="switch"
+            aria-checked="false"
+            aria-labelledby="theme-label"
+            aria-label="Toggle dark mode"
+            title="Toggle dark/light theme"
+          >
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-icon toggle-icon--light" aria-hidden="true">☀️</span>
+              <span class="toggle-icon toggle-icon--dark" aria-hidden="true">🌙</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main id="main-content" role="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- ── FOOTER / MUSIC PLAYER ── -->
+    {% block footer %}{% endblock %}
+
+  </div><!-- /.app-wrapper -->
+
+  <!-- Notification overlay -->
+  <div
+    class="notification-overlay"
+    id="notification-overlay"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="notif-title"
+    aria-describedby="notif-desc"
+    hidden
+  >
+    <div class="notification-card">
+      <div class="notif-icon" id="notif-icon" aria-hidden="true">✅</div>
+      <h2 class="notif-title" id="notif-title">Session Complete!</h2>
+      <p class="notif-desc" id="notif-desc">Time for a break.</p>
+      <button class="btn btn--primary" id="notif-close" aria-label="Dismiss notification">
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Audio element for timer notification sound -->
+  <audio id="timer-beep" aria-hidden="true" preload="auto">
+    <!-- Inline beep using a data URI so no external file needed -->
+  </audio>
+
+  {% block scripts %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>
